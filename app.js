@@ -14,6 +14,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(method())
 
+app.get('/', (req, res) => {
+    res.status(200).send('success')
+});
 app.use('/login', loginRouter);
 app.use('/breakfast', breakfastRouter);
 app.use('/transfer', transferRouter);
