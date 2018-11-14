@@ -1,8 +1,9 @@
 require('./src/models')
-require('./src/models/dailyTask')
 let express = require('express');
 let cors = require('cors')
+let schedule = require('node-schedule')
 let method = require('./src/utils/method')
+let dailyRun = require('./src/models/dailyTask')
 
 let loginRouter = require('./src/routes/login');
 let breakfastRouter = require('./src/routes/breakfast');
@@ -29,6 +30,12 @@ app.use('/cms', cmsRouter);
 app.get('/time', (req, res) => {
     res.success(new Date())
 })
+
+// 定时任务
+schedule.scheduleJob('30 1 1 * * *', function () {
+    dailyRun()
+    console.log('scheduleCronstyle:' + new Date());
+});
 
 let server = app.listen(3001, function () {
     var host = server.address().address;

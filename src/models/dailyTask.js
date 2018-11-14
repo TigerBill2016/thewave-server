@@ -38,29 +38,16 @@ let runs = [
     { destination: 'villas', time: '21: 20', count: 10 },
 ]
 
-async function foo1() {
+module.exports = async function dailyRun() {
     try {
-        let count = await BusrunsModel.countDocuments()
-        if (count === 0) {
-            BusrunsModel.create(runs)
-        }
+
+        await BreakfastModel.deleteMany()
+        await BusrunsModel.deleteMany()
+        await BusrunsModel.create(runs)
+        await BreakfastModel.create(list)
     } catch (error) {
         console.log('init busruns data error', error)
     }
 }
-
-async function foo2() {
-    try {
-        let count = await BreakfastModel.countDocuments()
-        if (count === 0) {
-            BreakfastModel.create(list)
-        }
-    } catch (error) {
-        console.log('init breakfast data error', error)
-    }
-}
-
-foo1()
-foo2()
 
 
