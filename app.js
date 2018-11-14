@@ -1,6 +1,7 @@
 require('./src/models')
 require('./src/models/dailyTask')
 let express = require('express');
+let cors = require('cors')
 let method = require('./src/utils/method')
 
 let loginRouter = require('./src/routes/login');
@@ -8,9 +9,11 @@ let breakfastRouter = require('./src/routes/breakfast');
 let transferRouter = require('./src/routes/transfer');
 let busrunRouter = require('./src/routes/busrun');
 let meRouter = require('./src/routes/me');
+let cmsRouter = require('./src/routes/cms')
 
 let app = express();
 app.use(express.json());
+app.use(cors({ origin: '*' }))
 app.use(express.urlencoded({ extended: true }));
 app.use(method())
 
@@ -22,6 +25,10 @@ app.use('/breakfast', breakfastRouter);
 app.use('/transfer', transferRouter);
 app.use('/busrun', busrunRouter);
 app.use('/me', meRouter);
+app.use('/cms', cmsRouter);
+app.get('/time', (req, res) => {
+    res.success(new Date())
+})
 
 let server = app.listen(3001, function () {
     var host = server.address().address;

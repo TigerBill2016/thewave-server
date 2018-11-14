@@ -1,4 +1,5 @@
 let express = require('express');
+let mongoose = require('mongoose')
 let router = express.Router();
 let fetch = require('node-fetch');
 let { stringify } = require('querystring')
@@ -6,6 +7,7 @@ let WXBizDataCrypt = require('../utils/WXBizDataCrypt')
 let { appid, secret } = require('../../config.app')
 
 let UsersModel = require('../models/users')
+let Schema = mongoose.Schema
 
 router.get('/', (req, res) => {
     let { code } = req.query;
@@ -23,20 +25,23 @@ router.get('/', (req, res) => {
 });
 
 router.post('/user', async (req, res) => {
-    let { session_key, encryptedData, iv } = req.body
+    console.log(req.body)
+    let { session_key, encryptedData, iv, ...rest } = req.body
     let pc = new WXBizDataCrypt(appid, session_key)
     let data = pc.decryptData(encryptedData, iv)
-    console.log('==================data.openId', data.openId)
+    console.log('==================data.openId', data.openId, data)
 
-    let doc = await UsersModel.findOne({ openid: data.openId })
-    if (doc) {
-        res.success('guest already exists')
-        return
-    }
-    let user = new UsersModel({ ...data, openid: data.openId, })
+    // let doc = await UsersModel.findOne({ _id: data.openId })
+    // if (doc) {
+    //     res.success('guest already exists')
+    //     return
+    // }
+
     try {
-        await user.save()
-        res.success('ok')
+        let doc = await UsersModel.create({
+            ...data, ...rest, openid: data.openId,
+        })
+        res.success({ guestid: doc._id })
     } catch (err) {
         res.error(err)
     }
