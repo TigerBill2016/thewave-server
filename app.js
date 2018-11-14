@@ -37,7 +37,7 @@ schedule.scheduleJob('30 1 1 * * *', function () {
     console.log('scheduleCronstyle:' + new Date());
 });
 
-let server = app.listen(3001, function () {
+let server = app.listen(3002, function () {
     var host = server.address().address;
     var port = server.address().port;
 
