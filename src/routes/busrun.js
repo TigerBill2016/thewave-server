@@ -66,9 +66,9 @@ router.get('/cancel', async (req, res) => {
     let { guestid } = req.query
     try {
         let doc = await BusrunsSubModel.findOne({guestid})
-        let doc1 = await BreakfastModel.findOne({ destination: doc.destination,time: doc.time })
-        await BreakfastModel.update({ destination: doc.destination,time: doc.time }, { count: doc1.member + doc.member })
-        await BreakfastSubModel.deleteMany({guestid})
+        let doc1 = await BusrunsModel.findOne({ destination: doc.destination,time: doc.time })
+        await BusrunsModel.update({ destination: doc.destination,time: doc.time }, { count: doc1.member + doc.member })
+        await BusrunsSubModel.deleteMany({guestid})
         res.success('取消成功')
     } catch (error) {
         res.error(error)

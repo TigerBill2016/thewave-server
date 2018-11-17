@@ -7,6 +7,9 @@ let BreakfastSubModel = require('../models/breakfast_sub')
 router.get('/data', async (req, res) => {
     try {
         let data = await BreakfastModel.find()
+        data = data.sort(function (t, e) {
+            return t.code <= e.code ? -1 : 1;
+        })
         res.success(data)
     } catch (error) {
         res.error(error)
