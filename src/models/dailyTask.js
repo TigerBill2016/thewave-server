@@ -14,28 +14,28 @@ let list = [
 ]
 
 let runs = [
-    { destination: 'market', time: '10: 00', count: 10 },
-    { destination: 'market', time: '11: 00', count: 10 },
-    { destination: 'market', time: '13: 00', count: 10 },
-    { destination: 'market', time: '14: 00', count: 10 },
-    { destination: 'market', time: '15: 00', count: 10 },
-    { destination: 'market', time: '17: 00', count: 10 },
-    { destination: 'market', time: '18: 00', count: 10 },
-    { destination: 'market', time: '19: 00', count: 10 },
-    { destination: 'market', time: '20: 00', count: 10 },
-    { destination: 'market', time: '21: 00', count: 10 },
+    { destination: 'market', time: '10: 00', member: 10 },
+    { destination: 'market', time: '11: 00', member: 10 },
+    { destination: 'market', time: '13: 00', member: 10 },
+    { destination: 'market', time: '14: 00', member: 10 },
+    { destination: 'market', time: '15: 00', member: 10 },
+    { destination: 'market', time: '17: 00', member: 10 },
+    { destination: 'market', time: '18: 00', member: 10 },
+    { destination: 'market', time: '19: 00', member: 10 },
+    { destination: 'market', time: '20: 00', member: 10 },
+    { destination: 'market', time: '21: 00', member: 10 },
 
 
-    { destination: 'villas', time: '10: 20', count: 10 },
-    { destination: 'villas', time: '11: 20', count: 10 },
-    { destination: 'villas', time: '13: 20', count: 10 },
-    { destination: 'villas', time: '14: 20', count: 10 },
-    { destination: 'villas', time: '15: 20', count: 10 },
-    { destination: 'villas', time: '17: 20', count: 10 },
-    { destination: 'villas', time: '18: 20', count: 10 },
-    { destination: 'villas', time: '19: 20', count: 10 },
-    { destination: 'villas', time: '20: 20', count: 10 },
-    { destination: 'villas', time: '21: 20', count: 10 },
+    { destination: 'villas', time: '10: 20', member: 10 },
+    { destination: 'villas', time: '11: 20', member: 10 },
+    { destination: 'villas', time: '13: 20', member: 10 },
+    { destination: 'villas', time: '14: 20', member: 10 },
+    { destination: 'villas', time: '15: 20', member: 10 },
+    { destination: 'villas', time: '17: 20', member: 10 },
+    { destination: 'villas', time: '18: 20', member: 10 },
+    { destination: 'villas', time: '19: 20', member: 10 },
+    { destination: 'villas', time: '20: 20', member: 10 },
+    { destination: 'villas', time: '21: 20', member: 10 },
 ]
 
 module.exports = async function dailyRun() {

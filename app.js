@@ -32,6 +32,7 @@ app.get('/time', (req, res) => {
 })
 
 // 定时任务
+dailyRun()
 schedule.scheduleJob('30 1 1 * * *', function () {
     dailyRun()
     console.log('scheduleCronstyle:' + new Date());

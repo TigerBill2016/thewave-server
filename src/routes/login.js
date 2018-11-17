@@ -17,9 +17,11 @@ router.get('/', (req, res) => {
         js_code: code,
         grant_type: 'authorization_code',
     }
+    console.log(new Date(),'code 换取 session_key openid')
     fetch(`https://api.weixin.qq.com/sns/jscode2session?${stringify(params)}`)
         .then(res => res.json())
         .then(body => {
+            console.log(new Date(), 'body', body)
             res.success(body)
         })
 });
@@ -29,7 +31,7 @@ router.post('/user', async (req, res) => {
     let { session_key, encryptedData, iv, ...rest } = req.body
     let pc = new WXBizDataCrypt(appid, session_key)
     let data = pc.decryptData(encryptedData, iv)
-    console.log('==================data.openId', data.openId, data)
+    console.log('session_key... 生成 openid', data.openId, data)
 
     // let doc = await UsersModel.findOne({ _id: data.openId })
     // if (doc) {
