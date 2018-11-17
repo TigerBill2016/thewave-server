@@ -38,10 +38,20 @@ router.post('/user', async (req, res) => {
     // }
 
     try {
-        let doc = await UsersModel.create({
-            ...data, ...rest, openid: data.openId,
-        })
-        res.success({ guestid: doc._id })
+        let hasUser = await UsersModel.findOne({ openid: data.openId })
+        if (hasUser) {
+            let doc = await UsersModel.updateOne({ openid: data.openId }, { ...data, ...rest, })
+            console.log('doc', doc)
+            res.success({
+                guestid: hasUser._id,
+                msg:'更新用户信息成功'
+            })
+        } else {
+            let doc = await UsersModel.create({
+                ...data, ...rest, openid: data.openId,
+            })
+            res.success({ guestid: doc._id,msg: '新增用户信息成功' })
+        }
     } catch (err) {
         res.error(err)
     }

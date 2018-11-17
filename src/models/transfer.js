@@ -1,12 +1,14 @@
 let mongoose = require('mongoose')
+let Schema = mongoose.Schema
 
 let transferSchema = new mongoose.Schema({
-    openid: { type: String, required: true },
+    guestid: { type: Schema.Types.ObjectId, required: true, ref: 'Users' },
     destination: { type: String, required: true },
     time: { type: String, required: true },
     flightNum: { type: String, required: true },
     remark: { type: String, },
-    category: { type: String, default: 'transfer' }
+    category: { type: String, default: 'transfer' },
+    date: { type: Date, default: Date.now }
 })
 
 let Transfer = mongoose.model('transfer', transferSchema)

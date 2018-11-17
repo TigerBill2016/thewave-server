@@ -7,7 +7,7 @@ let breakfastSubSchema = new Schema({
     code: { type: String, required: true },
     food: { type: String, required: true },
     category: { type: String, default: 'breakfast' },
-    data: { type: Date, default: Date.now }
+    date: { type: Date, default: Date.now }
 })
 
 let BreakfastSub = mongoose.model('breakfast_sub', breakfastSubSchema)

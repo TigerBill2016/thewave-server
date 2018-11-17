@@ -14,7 +14,6 @@ router.get('/data', async (req, res) => {
 })
 
 router.get('/issubsribe', async (req, res) => {
-    console.log(req.query, req.params)
     let { guestid } = req.query
     try {
         let doc = await BreakfastSubModel.findOne({ guestid })
