@@ -6,7 +6,7 @@ let TransferModel = require('../models/transfer')
 router.get('/isSubscribe', async (req, res) => {
     let { guestid } = req.query
     try {
-        let doc = await TransferModel.findOne({ guestid })
+        let doc = await TransferModel.findOne({ guestid, date: { $gte: new Date(Date.now() - 24 * 3600 * 100) } })
         if (doc) {
             res.success(true)
         } else {

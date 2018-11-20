@@ -19,8 +19,8 @@ router.get('/data', async (req, res) => {
 router.get('/issubsribe', async (req, res) => {
     let { guestid } = req.query
     try {
-        let doc = await BreakfastSubModel.findOne({ guestid })
-        if (doc) {
+        let doc = await BreakfastSubModel.find({ guestid, date: { $gte: new Date(Date.now() - 24 * 3600 * 100) } })
+        if (doc.length !== 0) {
             res.success(true)
         } else {
             res.success(false)

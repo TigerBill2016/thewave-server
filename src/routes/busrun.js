@@ -22,7 +22,7 @@ router.get('/data', async (req, res) => {
 router.get('/isSubscribe', async (req, res) => {
     let { guestid } = req.query
     try {
-        let doc = await BusrunsSubModel.findOne({ guestid })
+        let doc = await BusrunsSubModel.findOne({ guestid, date: { $gte: new Date(Date.now() - 24 * 3600 * 100) } })
         if (doc) {
             res.success(true)
         } else {
@@ -42,7 +42,7 @@ router.post('/subscribe', async (req, res) => {
         }
         console.log('params', params)
         let doc = await BusrunsModel.findOne(params)
-        console.log('body',body)
+        console.log('body', body)
         console.log('doc', doc)
         if (doc.member - body.member < 0) {
             res.success({
@@ -65,10 +65,10 @@ router.post('/subscribe', async (req, res) => {
 router.get('/cancel', async (req, res) => {
     let { guestid } = req.query
     try {
-        let doc = await BusrunsSubModel.findOne({guestid})
-        let doc1 = await BusrunsModel.findOne({ destination: doc.destination,time: doc.time })
-        await BusrunsModel.update({ destination: doc.destination,time: doc.time }, { count: doc1.member + doc.member })
-        await BusrunsSubModel.deleteMany({guestid})
+        let doc = await BusrunsSubModel.findOne({ guestid })
+        let doc1 = await BusrunsModel.findOne({ destination: doc.destination, time: doc.time })
+        await BusrunsModel.update({ destination: doc.destination, time: doc.time }, { count: doc1.member + doc.member })
+        await BusrunsSubModel.deleteMany({ guestid })
         res.success('取消成功')
     } catch (error) {
         res.error(error)

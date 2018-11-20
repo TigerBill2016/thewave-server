@@ -6,11 +6,11 @@ let TransferModel = require('../models/transfer')
 let BusrunSubModel = require('../models/busrun_sub')
 
 router.get('/data', async (req, res) => {
-    let { query } = req
+    let { guestid } = req.query
     try {
-        let breakfast = await BreakfastSubModel.findOne(query)
-        let transfer = await TransferModel.findOne(query)
-        let bus = await BusrunSubModel.findOne(query)
+        let breakfast = await BreakfastSubModel.findOne({ guestid, date: { $gte: new Date(Date.now() - 24 * 3600 * 100) } })
+        let transfer = await TransferModel.findOne({ guestid, date: { $gte: new Date(Date.now() - 24 * 3600 * 100) } })
+        let bus = await BusrunSubModel.findOne({ guestid, date: { $gte: new Date(Date.now() - 24 * 3600 * 100) } })
 
         let data = {
             breakfast,
