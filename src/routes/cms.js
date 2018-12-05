@@ -8,7 +8,7 @@ let BusrunsSubModel = require('../models/busrun_sub')
 
 router.get('/breakfast', async (req, res) => {
     try {
-        let docs = await BreakfastSubModel.find().populate('guestid').exec()
+        let docs = await BreakfastSubModel.find().populate('guestid').sort({'date':'desc'}).exec()
         let data = docs.map(doc => ({
             guestid: doc.guestid._id,
             username: doc.guestid.username,
@@ -28,7 +28,7 @@ router.get('/breakfast', async (req, res) => {
 
 router.get('/transfer', async (req, res) => {
     try {
-        let docs = await TransferModel.find().populate('guestid').exec()
+        let docs = await TransferModel.find().populate('guestid').sort({'date':'desc'}).exec()
         let data = docs.map(doc => ({
             guestid: doc.guestid._id,
             username: doc.guestid.username,
@@ -49,7 +49,7 @@ router.get('/transfer', async (req, res) => {
 
 router.get('/bus', async (req, res) => {
     try {
-        let docs = await BusrunsSubModel.find().populate('guestid').exec()
+        let docs = await BusrunsSubModel.find().populate('guestid').sort({'date':'desc'}).exec()
         let data = docs.map(doc => ({
             guestid: doc.guestid._id,
             username: doc.guestid.username,

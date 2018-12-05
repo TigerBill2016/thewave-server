@@ -11,7 +11,9 @@ let usersSchema = new Schema({
     number: { type: String, required: true },
     person: { type: Number, required: true },
     avatarUrl: { type: String, },
-    data: { type: Date, default: Date.now }
+    startDate: { type: String, },
+    endDate: { type: String, },
+    date: { type: Date, default: Date.now }
 })
 
 let Users = mongoose.model('Users', usersSchema)

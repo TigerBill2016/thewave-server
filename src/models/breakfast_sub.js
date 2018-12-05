@@ -7,6 +7,7 @@ let breakfastSubSchema = new Schema({
     code: { type: String, required: true },
     food: { type: String, required: true },
     category: { type: String, default: 'breakfast' },
+    total: { type: String, },
     date: { type: Date, default: Date.now }
 })
 
