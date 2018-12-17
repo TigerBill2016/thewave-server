@@ -3,6 +3,7 @@ let router = express.Router();
 
 let BreakfastModel = require('../models/breakfast')
 let BreakfastSubModel = require('../models/breakfast_sub')
+let MessageModel = require('../models/message')
 
 router.get('/data', async (req, res) => {
     try {
@@ -44,19 +45,28 @@ router.post('/subscribe', async (req, res) => {
         }
         await BreakfastSubModel.create(data)
         await BreakfastModel.update({ code: body.timeCode }, { count: doc.count - 1 })
+        await MessageModel.create({
+            title: '预约早餐',
+            message: `${body.roomNum} ${doc.time} ${body.food} ${body.pax}pax`,
+            ...body
+        })
         res.success('预约早餐成功')
     } catch (error) {
         res.error(error)
     }
 })
 
-router.post('/cancel', async (req, res) => {
-    let { body } = req
+router.get('/cancel', async (req, res) => {
+    let { guestid } = req.query
     try {
-        let doc = await BreakfastSubModel.findOne(body)
+        let doc = await BreakfastSubModel.findOne({guestid})
         let doc1 = await BreakfastModel.findOne({ code: doc.code })
         await BreakfastModel.update({ code: doc.code }, { count: doc1.count + 1 })
-        await BreakfastSubModel.deleteMany(body)
+        await BreakfastSubModel.deleteMany({guestid})
+        await MessageModel.create({
+            title: '取消早餐',
+            guestid
+        })
         res.success('取消成功')
     } catch (error) {
         res.error(error)

@@ -6,6 +6,8 @@ let transferSchema = new mongoose.Schema({
     destination: { type: String, required: true },
     time: { type: String, required: true },
     flightNum: { type: String, required: true },
+    person: { type: String, },
+    pax: { type: Number, },
     remark: { type: String, },
     category: { type: String, default: 'transfer' },
     date: { type: Date, default: Date.now }

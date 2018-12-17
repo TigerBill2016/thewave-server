@@ -3,6 +3,7 @@ let router = express.Router();
 
 let BusrunsModel = require('../models/busrun')
 let BusrunsSubModel = require('../models/busrun_sub')
+let MessageModel = require('../models/message')
 
 router.get('/data', async (req, res) => {
     try {
@@ -40,11 +41,8 @@ router.post('/subscribe', async (req, res) => {
             destination: body.destination,
             time: body.time
         }
-        console.log('params', params)
         let doc = await BusrunsModel.findOne(params)
-        console.log('body', body)
-        console.log('doc', doc)
-        if (doc.member - body.member < 0) {
+        if (doc.member - body.pax < 0) {
             res.success({
                 code: 1, // 失败
                 msg: `只剩余${doc.member}个座位，请选择其他时间`
@@ -52,7 +50,12 @@ router.post('/subscribe', async (req, res) => {
             return
         }
         await BusrunsSubModel.create(body)
-        await BusrunsModel.update(params, { member: doc.member - body.member })
+        await BusrunsModel.update(params, { member: doc.member - body.pax })
+        await MessageModel.create({
+            title: '预约班车',
+            message: `${body.roomNum} ${body.time} ${body.flightNum} ${body.destination == 'villas' ? 'central to villa' : 'villa to central'} ${body.pax}pax`,
+            ...body
+        })
         res.success({
             code: 0,
             msg: '预约成功'
@@ -69,6 +72,10 @@ router.get('/cancel', async (req, res) => {
         let doc1 = await BusrunsModel.findOne({ destination: doc.destination, time: doc.time })
         await BusrunsModel.update({ destination: doc.destination, time: doc.time }, { count: doc1.member + doc.member })
         await BusrunsSubModel.deleteMany({ guestid })
+        await MessageModel.create({
+            title: '取消班车',
+            guestid
+        })
         res.success('取消成功')
     } catch (error) {
         res.error(error)
