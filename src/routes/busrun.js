@@ -53,7 +53,7 @@ router.post('/subscribe', async (req, res) => {
         await BusrunsModel.update(params, { member: doc.member - body.pax })
         await MessageModel.create({
             title: '预约班车',
-            message: `${body.roomNum} ${body.time} ${body.flightNum} ${body.destination == 'villas' ? 'central to villa' : 'villa to central'} ${body.pax}pax`,
+            message: `${body.roomNum} ${body.time} ${body.destination == 'villas' ? 'central to villa' : 'villa to central'} ${body.pax}pax`,
             ...body
         })
         res.success({
